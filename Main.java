@@ -8,6 +8,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        SwingUtilities.invokeLater(() -> new CurrencyConverter());
+        SwingUtilities.invokeLater(() -> new Converter());
     }
 }
