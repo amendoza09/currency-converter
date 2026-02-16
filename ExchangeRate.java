@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import org.json.JSONObject;
 
 public class ExchangeRate {
     private static final String API_URL = "https://api.exchangerate-api.com/v4/latest/";
@@ -32,14 +31,36 @@ public class ExchangeRate {
         }
         in.close();
 
-        JSONObject jsonResponse = new JSONObject(res.toString());
-        JSONObject rates = jsonResponse.getJSONObject("rates");
+        String jsonResponse = res.toString();
+        double rate = parseRate(jsonResponse, toCurrency);
 
-        if (!rates.has(toCurrency)) {
+        if (rate == -1) {
             throw new Exception("Currency not found: " + toCurrency);
         }
 
-        return rates.getDouble(toCurrency);
+        return rate;
+    }
+
+    private double parseRate(String json, String currency) {
+        String searchKey = "\"" + currency + "\":";
+        int index = json.indexOf(searchKey);
+
+        if (index == -1) {
+            return -1;
+        }
+
+        int startIndex = index + searchKey.length();
+        int endIndex = startIndex;
+        while(endIndex < json.length()) {
+            char c = json.charAt(endIndex);
+            if(c == ',' | c == '}') {
+                break;
+            }
+            endIndex++;
+        }
+
+        String rateString = json.substring(startIndex, endIndex).trim();
+        return Double.parseDouble(rateString);
     }
 
     public ConversionResult convert(double amount, String fromCurrency, String toCurrency) throws Exception {
