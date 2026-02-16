@@ -38,15 +38,76 @@ public class Converter extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
 
         JLabel titleLabel = new JLabel("Currency Converter");
-        titleLabel.setFont(new Font("Ariel", Font.BOLD, 24));
-        titleLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 3;
         mainPanel.add(titleLabel, gbc);
 
         gbc.gridwidth = 1;
-        
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        mainPanel.add(new JLabel("Amount:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridwidth = 2;
+        amountField = new JTextField("1.00");
+        amountField.setFont(new Font("Arial", Font.PLAIN, 14));
+        amountField.addActionListener(e -> performConversion());
+        mainPanel.add(amountField, gbc);
+
+        gbc.gridwidth = 1;
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        mainPanel.add(new JLabel("From:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridwidth = 2;
+        fromCurrency = new JComboBox<>(CURRENCIES);
+        fromCurrency.setSelectedItem("USD");
+        fromCurrency.setFont(new Font("Arial", Font.PLAIN, 14));
+        mainPanel.add(fromCurrency, gbc);
+
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        gbc.gridwidth = 3;
+        swapButton = new JButton("Swap Currencies");
+        swapButton.setFont(new Font("Arial", Font.BOLD, 12));
+        swapButton.addActionListener(e -> swapCurrencies());
+        mainPanel.add(swapButton, gbc);
+
+        gbc.gridwidth = 1;
+        gbc.gridy = 4;
+        gbc.gridx = 0;
+        mainPanel.add(new JLabel("To:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridwidth = 2;
+        toCurrency = new JComboBox<>(CURRENCIES);
+        toCurrency.setSelectedItem("EUR");
+        toCurrency.setFont(new Font("Arial", Font.PLAIN, 14));
+        mainPanel.add(toCurrency, gbc);
+
+        gbc.gridy = 5;
+        gbc.gridx = 0;
+        gbc.gridwidth= 3;
+        convertButton = new JButton("Convert");
+        convertButton.setFont(new Font("Arial", Font.BOLD, 16));
+        convertButton.setBackground(new Color(70, 130, 180));
+        convertButton.setForeground(Color.WHITE);
+        convertButton.setFocusPainted(false);
+        convertButton.addActionListener(e -> performConversion());
+        mainPanel.add(convertButton, gbc);
+
+
+        gbc.gridy = 6;
+        resultLabel = new JLabel(" ");
+        resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        resultLabel.setForeground(new Color(0, 100, 0));
+        mainPanel.add(resultLabel, gbc);
+
+        add(mainPanel, BorderLayout.CENTER);
     }
 
     private void swapCurrencies() {
