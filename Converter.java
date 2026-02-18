@@ -95,7 +95,6 @@ public class Converter extends JFrame {
         convertButton = new JButton("Convert");
         convertButton.setFont(new Font("Arial", Font.BOLD, 16));
         convertButton.setBackground(new Color(70, 130, 180));
-        convertButton.setForeground(Color.WHITE);
         convertButton.setFocusPainted(false);
         convertButton.addActionListener(e -> performConversion());
         mainPanel.add(convertButton, gbc);
@@ -158,7 +157,7 @@ public class Converter extends JFrame {
     }
 
     private void displayResult(ConversionResult result) {
-        resultLabel.setText(String.format("%.2f %s = @.2f %s", result.getAmount(), result.getFromCurrency(),
+        resultLabel.setText(String.format("%.2f %s = %.2f %s", result.getAmount(), result.getFromCurrency(),
             result.getConvertedAmount(), result.getToCurrency()));
     }
 

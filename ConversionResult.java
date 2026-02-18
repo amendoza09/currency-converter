@@ -8,7 +8,7 @@ public class ConversionResult {
     public ConversionResult(double amount, String fromCurrency, double convertedAmount, String toCurrency, double exchangeRate) {
         this.amount = amount;
         this.fromCurrency = fromCurrency;
-        this. convertedAmount = convertedAmount;
+        this.convertedAmount = convertedAmount;
         this.toCurrency = toCurrency;
         this.exchangeRate = exchangeRate;
     }
